@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 const sessionConfig: SessionOptions = {
-  secret: '0401',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false },
