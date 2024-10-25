@@ -7,6 +7,20 @@ import {
 } from 'typeorm';
 import { Pet } from './Pet';
 
+declare global {
+  namespace Express {
+    interface User {
+      id: number;
+      name: string;
+      email: string;
+      socialId: string;
+      socialProvider: string;
+      profileImage?: string;
+      isVerified: boolean;
+    }
+  }
+}
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn({ type: 'bigint', name: 'id' })

@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { userRepository } from '../repository/repository';
+import { User } from '../entity/User';
 
 passport.use(
   new GoogleStrategy(
@@ -10,14 +11,16 @@ passport.use(
       callbackURL: '/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
+      console.log('Profile:', profile);
       try {
         const { id, displayName, emails, photos } = profile;
         const email = emails?.[0].value;
         const profileImage = photos?.[0].value;
 
-        let user = await userRepository.findOne({
+        let user: User | null = await userRepository.findOne({
           where: { socialId: id, socialProvider: 'google' },
         });
+        console.log('User found:', user);
 
         if (!user && email) {
           user = userRepository.create({
@@ -26,7 +29,7 @@ passport.use(
             socialId: id,
             socialProvider: 'google',
             profileImage: profileImage,
-            isVerified: true,
+            isVerified: false,
           });
 
           await userRepository.save(user);
@@ -40,7 +43,7 @@ passport.use(
   ),
 );
 
-passport.serializeUser((user, done) => {
+passport.serializeUser((user: Express.User, done) => {
   done(null, user.id.toString());
 });
 

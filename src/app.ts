@@ -5,6 +5,7 @@ import indexRouter from './routes/index';
 import connectDB from './config/db';
 import passport from 'passport';
 import session, { SessionOptions } from 'express-session';
+import './config/passport';
 
 const app: express.Application = express();
 
