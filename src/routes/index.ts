@@ -1,5 +1,5 @@
 import express from 'express';
-import authRoutes from './authRoutes';
+import socialAuthRoutes from './auth/socialAuthRoutes';
 const router: express.Router = express.Router();
 
 router.get(
@@ -9,6 +9,6 @@ router.get(
   },
 );
 
-router.use('/auth', authRoutes);
+router.use('/auth', socialAuthRoutes);
 
 export default router;
