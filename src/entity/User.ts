@@ -13,6 +13,7 @@ declare global {
       id: number;
       name: string;
       email: string;
+      password: string;
       socialId: string;
       socialProvider: string;
       profileImage?: string;
@@ -32,15 +33,18 @@ export class User {
   @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
   email!: string;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  password!: string;
+
   @Column({ type: 'text' })
   profileImage!: string;
 
   @Column({
     type: 'enum',
-    enum: ['kakao', 'google', 'naver', 'apple'],
+    enum: ['google', 'naver'],
     nullable: false,
   })
-  socialProvider!: 'kakao' | 'google' | 'naver' | 'apple';
+  socialProvider!: 'google' | 'naver';
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   socialId!: string;
