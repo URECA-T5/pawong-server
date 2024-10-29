@@ -36,17 +36,17 @@ export class User {
   @Column({ type: 'varchar', length: 255, nullable: true })
   password!: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   profileImage!: string;
 
   @Column({
     type: 'enum',
     enum: ['google', 'naver'],
-    nullable: false,
+    nullable: true,
   })
   socialProvider!: 'google' | 'naver';
 
-  @Column({ type: 'varchar', length: 255, nullable: false })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   socialId!: string;
 
   @Column({ type: 'boolean', default: false })
