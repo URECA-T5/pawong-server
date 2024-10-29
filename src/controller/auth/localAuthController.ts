@@ -1,0 +1,41 @@
+import { Request, Response } from 'express';
+import {
+  findUserByEmail,
+  signupUser,
+  validatePassword,
+} from '../../service/auth/localAuthService';
+import { generateToken } from '../../config/jwt';
+
+export const signup = async (req: Request, res: Response): Promise<void> => {
+  const { email, password, name, profileImage } = req.body;
+  try {
+    const existingUser = await findUserByEmail(email);
+    if (existingUser) {
+      res.status(400).json({ message: '이미 존재하는 유저입니다.' });
+      return;
+    }
+
+    await signupUser(email, password, name, profileImage);
+    res.status(200).json({ message: '회원가입이 완료되었습니다.', name });
+  } catch (error) {
+    res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    console.error(error);
+  }
+};
+
+export const login = async (req: Request, res: Response): Promise<void> => {
+  const { email, password } = req.body;
+  try {
+    const user = await findUserByEmail(email);
+    if (!user || !(await validatePassword(password, user.password))) {
+      res.status(401).json({ message: '잘못된 이메일 또는 비밀번호입니다.' });
+      return;
+    }
+
+    const token = generateToken(user.id.toString());
+    res.status(200).json({ message: '로그인 성공', token });
+  } catch (error) {
+    res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    console.error(error);
+  }
+};

@@ -1,5 +1,6 @@
 import express from 'express';
-import authRoutes from './authRoutes';
+import socialAuthRoutes from './auth/socialAuthRoutes';
+import localAuthRoutes from './auth/localAuthRoutes';
 const router: express.Router = express.Router();
 
 router.get(
@@ -9,6 +10,7 @@ router.get(
   },
 );
 
-router.use('/auth', authRoutes);
+router.use('/auth', socialAuthRoutes);
+router.use('/auth', localAuthRoutes);
 
 export default router;

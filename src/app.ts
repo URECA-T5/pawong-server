@@ -5,7 +5,6 @@ import indexRouter from './routes/index';
 import connectDB from './config/db';
 import passport from 'passport';
 import session, { SessionOptions } from 'express-session';
-import './config/passportStrategies';
 import { initPassportStrategies } from './config/passportStrategies';
 
 const app: express.Application = express();

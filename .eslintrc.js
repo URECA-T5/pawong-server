@@ -16,6 +16,11 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
+  settings: {
+    'import/resolver': {
+      typescript: {},
+    },
+  },
   plugins: ['@typescript-eslint', 'import', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
