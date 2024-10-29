@@ -5,7 +5,8 @@ import indexRouter from './routes/index';
 import connectDB from './config/db';
 import passport from 'passport';
 import session, { SessionOptions } from 'express-session';
-import './config/passport';
+import './config/passportStrategies';
+import { initPassportStrategies } from './config/passportStrategies';
 
 const app: express.Application = express();
 
@@ -13,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 const sessionConfig: SessionOptions = {
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET!,
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false },
@@ -22,6 +23,7 @@ const sessionConfig: SessionOptions = {
 app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
+initPassportStrategies();
 
 connectDB();
 
