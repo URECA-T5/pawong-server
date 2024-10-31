@@ -39,12 +39,7 @@ export const initPassportStrategies = (): void => {
 const createStrategy = (provider: Provider, Strategy: any, options: any) => {
   return new Strategy(
     options,
-    (
-      accessToken: string,
-      refreshToken: string,
-      profile: Profile,
-      done: (error: any, user?: any) => void,
-    ) => {
+    (profile: Profile, done: (error: any, user?: any) => void) => {
       handleSocialLogin(profile, provider, done);
     },
   );

@@ -1,27 +1,37 @@
 import passport from 'passport';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { generateAccessToken, generateRefreshToken } from '../../config/jwt';
 
 export const authenticateProvider =
-  (provider: string) => (req: Request, res: Response) => {
-    passport.authenticate(provider, { scope: getScopes(provider) })(req, res);
+  (provider: string) =>
+  (req: Request, res: Response, next: NextFunction): void => {
+    passport.authenticate(provider, { scope: getScopes(provider) })(
+      req,
+      res,
+      next,
+    );
   };
 
 export const handleCallback =
-  (provider: string) => (req: Request, res: Response) => {
+  (provider: string) =>
+  (req: Request, res: Response, next: NextFunction): void => {
     passport.authenticate(
       provider,
       { failureRedirect: '/' },
-      (err: any, user: Express.User, info: any) => {
+      (err: any, user: Express.User) => {
+        if (err) return next(err);
         if (err || !user) return res.redirect('/');
 
         req.login(user, (loginErr) => {
-          if (loginErr) {
-            return res.redirect('/');
-          }
-          res.redirect('http://localhost:3000/');
+          if (loginErr) return next(loginErr);
+
+          const accessToken = generateAccessToken(user.id.toString());
+          const refreshToken = generateRefreshToken(user.id.toString());
+
+          res.json({ accessToken, refreshToken });
         });
       },
-    )(req, res);
+    )(req, res, next);
   };
 
 const getScopes = (provider: string) => {

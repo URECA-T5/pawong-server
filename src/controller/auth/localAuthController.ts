@@ -4,7 +4,7 @@ import {
   signupUser,
   validatePassword,
 } from '../../service/auth/localAuthService';
-import { generateToken } from '../../config/jwt';
+import { generateAccessToken, generateRefreshToken } from '../../config/jwt';
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
   const { email, password, name, profileImage } = req.body;
@@ -23,7 +23,10 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const login = async (req: Request, res: Response): Promise<void> => {
+export const localLogin = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const { email, password } = req.body;
   try {
     const user = await findUserByEmail(email);
@@ -32,8 +35,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const token = generateToken(user.id.toString());
-    res.status(200).json({ message: '로그인 성공', token });
+    const accessToken = generateAccessToken(user.id.toString());
+    const refreshToken = generateRefreshToken(user.id.toString());
+
+    res.status(200).json({ message: '로그인 성공', accessToken, refreshToken });
   } catch (error) {
     res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     console.error(error);

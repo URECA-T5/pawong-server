@@ -6,9 +6,15 @@ interface CustomRequest extends Request {
   user?: User;
 }
 
-export const generateToken = (userId: string): string => {
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET!, {
+export const generateAccessToken = (userId: string): string => {
+  return jwt.sign({ id: userId }, process.env.ACCESS_TOKEN_SECRET!, {
     expiresIn: '1h',
+  });
+};
+
+export const generateRefreshToken = (userId: string): string => {
+  return jwt.sign({ id: userId }, process.env.REFRESH_TOKEN_SECRET!, {
+    expiresIn: '7d',
   });
 };
 
@@ -17,14 +23,14 @@ export const checkTokenInHeader = (
   res: Response,
   next: NextFunction,
 ): void => {
-  const token = req.headers.authorization?.split(' ')[1]; // 'Bearer <token>' 형식
+  const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
     res.status(401).json({ message: '토큰이 제공되지 않았습니다.' });
     return;
   }
 
-  jwt.verify(token, process.env.JWT_SECRET!, (err, user) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err, user) => {
     if (err) {
       res.status(403).json({ message: '토큰이 유효하지 않습니다.' });
       return;
