@@ -5,21 +5,24 @@ interface CustomRequest extends Request {
   user?: any;
 }
 
-const authenticateToken = (
+export const authenticateToken = (
   req: CustomRequest,
   res: Response,
   next: NextFunction,
-) => {
+): void => {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({ message: '토큰이 제공되지 않았습니다.' });
+    res.status(401).json({ message: '토큰이 제공되지 않았습니다.' });
+    return;
   }
 
-  jwt.verify(token, process.env.JWT_SECRET!, (err, user) => {
-    if (err)
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err, user) => {
+    if (err) {
+      console.error('Token verification error:', err);
       return res.status(403).json({ message: '토큰이 유효하지 않습니다.' });
+    }
     req.user = user;
     next();
   });
