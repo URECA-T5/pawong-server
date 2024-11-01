@@ -18,13 +18,13 @@ export const signupUser = async (
   return userRepository.save(newUser);
 };
 
-export const findUserByEmail = async (email: string) => {
+export const findUserByEmail = async (email: string): Promise<User | null> => {
   return userRepository.findOne({ where: { email } });
 };
 
 export const validatePassword = async (
   inputPassword: string,
   userPassword: string,
-) => {
+): Promise<boolean> => {
   return bcrypt.compare(inputPassword, userPassword);
 };
