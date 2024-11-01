@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -17,6 +16,19 @@ export class Pet {
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   name!: string;
+
+  @Column({ type: 'text', nullable: false })
+  profileImage!: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['dog', 'cat'],
+    nullable: false,
+  })
+  species!: 'dog' | 'cat';
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  breed!: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   rescueLocation!: string;
@@ -39,13 +51,6 @@ export class Pet {
 
   @Column({ type: 'text', nullable: false })
   info!: string;
-
-  @Column({
-    type: 'enum',
-    enum: ['possible', 'ing', 'complete'],
-    nullable: false,
-  })
-  status!: 'possible' | 'ing' | 'complete';
 
   @ManyToOne(() => User, (user: User) => user.pets)
   user!: User;
