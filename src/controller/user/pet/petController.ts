@@ -7,16 +7,16 @@ export const registerPet = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { userEmail, animal } = req.body;
+  const { userEmail, pet } = req.body;
 
   try {
-    const newPet = await petService.registerPet(userEmail, animal);
-    res.status(201).json(newPet);
+    await petService.registerPet(userEmail, pet);
+    res.status(201).json({ message: '등록이 완료되었습니다.' });
   } catch (error) {
     const typedError = error as Error;
     console.error(typedError);
     res.status(500).json({
-      message: '동물 등록에 실패했습니다.',
+      message: '임시 보호 동물 등록에 실패했습니다.',
       error: typedError.message,
     });
   }
