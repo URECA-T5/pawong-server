@@ -5,9 +5,12 @@ import tokenRoutes from './auth/tokenRoutes';
 import petRoutes from './user/pet/petRoutes';
 const router: express.Router = express.Router();
 
-router.get('/health', function (res: express.Response): void {
-  res.status(200).json({ status: 'ok' });
-});
+router.get(
+  '/health',
+  function (req: express.Request, res: express.Response): void {
+    res.status(200).json({ status: 'ok' });
+  },
+);
 
 router.use('/auth', socialAuthRoutes);
 router.use('/auth', localAuthRoutes);
