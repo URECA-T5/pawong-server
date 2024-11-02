@@ -28,7 +28,9 @@ connectDB();
 
 app.use('/', indexRouter);
 
+const host = process.env.HOST || 'localhost';
 const port = 8080;
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+
+app.listen(port, host, () => {
+  console.log(`Server is running on http://${host}:${port}`);
 });
