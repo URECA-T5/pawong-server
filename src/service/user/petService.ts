@@ -2,6 +2,11 @@ import { petRepository, userRepository } from '../../repository/repository';
 import { Pet } from '../../entity/Pet';
 import { User } from '../../entity/User';
 
+interface imgFosterDiaries {
+  id: number;
+  imageUrl: string;
+}
+
 export class PetService {
   async registerPet(userEmail: string, petData: Partial<Pet>): Promise<Pet> {
     const user: User | null = await userRepository.findOne({
@@ -18,9 +23,20 @@ export class PetService {
   }
 
   async getPetById(petId: number): Promise<Pet | null> {
-    return await petRepository.findOne({
+    const pet = await petRepository.findOne({
       where: { id: petId },
       relations: ['fosterDiaries'],
     });
+
+    if (pet && pet.fosterDiaries) {
+      const imgFosterDiaries = pet.fosterDiaries.map((diary) => ({
+        id: diary.id,
+        imageUrl: diary.imageUrl,
+      }));
+
+      pet.fosterDiaries = imgFosterDiaries as any;
+    }
+
+    return pet;
   }
 }
