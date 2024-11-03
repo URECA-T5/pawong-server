@@ -22,16 +22,23 @@ export class Pet {
 
   @Column({
     type: 'enum',
-    enum: ['dog', 'cat'],
+    enum: ['강아지', '고양이'],
     nullable: false,
   })
-  species!: 'dog' | 'cat';
+  species!: '강아지' | '고양이';
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   breed!: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   rescueLocation!: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['긴급', '일반'],
+    nullable: false,
+  })
+  protectionType!: '긴급' | '일반';
 
   @Column({
     type: 'enum',
