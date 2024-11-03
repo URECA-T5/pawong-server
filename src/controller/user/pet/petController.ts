@@ -45,3 +45,27 @@ export const getAllPets = async (
     res.status(500).json({ message: '동물 조회에 실패했습니다.' });
   }
 };
+
+export const getPetDetail = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const petId = parseInt(req.params.petId);
+  try {
+    const pet = await petService.getPetById(petId);
+
+    if (!pet) {
+      res.status(404).json({ message: '동물을 찾을 수 없습니다.' });
+      return;
+    }
+
+    res.status(200).json({ pet });
+  } catch (error) {
+    const typedError = error as Error;
+    console.error(typedError);
+    res.status(500).json({
+      message: '동물 세부정보 조회에 실패했습니다.',
+      error: typedError.message,
+    });
+  }
+};

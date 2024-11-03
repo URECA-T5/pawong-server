@@ -16,4 +16,11 @@ export class PetService {
   async getAllPets(): Promise<Pet[]> {
     return await petRepository.find();
   }
+
+  async getPetById(petId: number): Promise<Pet | null> {
+    return await petRepository.findOne({
+      where: { id: petId },
+      relations: ['fosterDiaries'],
+    });
+  }
 }

@@ -22,10 +22,10 @@ export class Pet {
 
   @Column({
     type: 'enum',
-    enum: ['강아지', '고양이'],
+    enum: ['dog', 'cat'],
     nullable: false,
   })
-  species!: '강아지' | '고양이';
+  species!: 'dog' | 'cat';
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   breed!: string;
