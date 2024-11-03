@@ -20,6 +20,9 @@ export class FosterDiary {
   @Column({ type: 'text', nullable: false })
   content!: string;
 
+  @Column({ type: 'varchar', length: 255, nullable: false })
+  place!: string;
+
   @Column({ type: 'text', nullable: false })
   imageUrl!: string;
 
