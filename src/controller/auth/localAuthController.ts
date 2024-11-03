@@ -7,7 +7,9 @@ import {
 import { generateAccessToken, generateRefreshToken } from '../../config/jwt';
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
-  const { email, password, nickName, profileImage } = req.body;
+  const { email, password, nickName } = req.body;
+  const profileImage = req.file ? req.file.path : undefined;
+
   try {
     const existingUser = await findUserByEmail(email);
     if (existingUser) {

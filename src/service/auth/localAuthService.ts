@@ -6,13 +6,13 @@ export const signupUser = async (
   email: string,
   password: string,
   nickName: string,
-  profileImage: string,
+  profileImage?: string,
 ): Promise<User> => {
   const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = await userRepository.create({
+  const newUser = userRepository.create({
     email,
     password: hashedPassword,
-    nickName: nickName,
+    nickName,
     profileImage,
   });
   return userRepository.save(newUser);

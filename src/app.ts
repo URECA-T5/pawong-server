@@ -6,6 +6,7 @@ import connectDB from './config/db';
 import passport from 'passport';
 import session, { SessionOptions } from 'express-session';
 import { initPassportStrategies } from './config/passportStrategies';
+import path from 'path';
 
 const app: express.Application = express();
 
@@ -23,6 +24,7 @@ app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 initPassportStrategies();
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 connectDB();
 
