@@ -32,9 +32,7 @@ export const getAllPets = async (
     const filteredPets = pets.map((pet: Pet) => ({
       id: pet.id,
       name: pet.name,
-      age: pet.birthDate
-        ? new Date().getFullYear() - new Date(pet.birthDate).getFullYear()
-        : null,
+      age: pet.age,
       gender: pet.gender,
       profileImage: pet.profileImage,
       species: pet.species,
@@ -50,12 +48,11 @@ export const getPetDetail = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const petId = parseInt(req.params.petId);
+  const { petId } = req.params;
   try {
-    const pet = await petService.getPetById(petId);
-
+    const pet: Pet | null = await petService.getPetById(Number(petId));
     if (!pet) {
-      res.status(404).json({ message: '동물을 찾을 수 없습니다.' });
+      res.status(404).json({ message: '펫을 찾을 수 없습니다.' });
       return;
     }
 

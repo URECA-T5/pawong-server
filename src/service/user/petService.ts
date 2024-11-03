@@ -2,11 +2,6 @@ import { petRepository, userRepository } from '../../repository/repository';
 import { Pet } from '../../entity/Pet';
 import { User } from '../../entity/User';
 
-interface imgFosterDiaries {
-  id: number;
-  imageUrl: string;
-}
-
 export class PetService {
   async registerPet(userEmail: string, petData: Partial<Pet>): Promise<Pet> {
     const user: User | null = await userRepository.findOne({

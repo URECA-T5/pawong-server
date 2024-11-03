@@ -7,7 +7,7 @@ import {
 import { generateAccessToken, generateRefreshToken } from '../../config/jwt';
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
-  const { email, password, name, profileImage } = req.body;
+  const { email, password, nickName, profileImage } = req.body;
   try {
     const existingUser = await findUserByEmail(email);
     if (existingUser) {
@@ -15,8 +15,8 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    await signupUser(email, password, name, profileImage);
-    res.status(200).json({ message: '회원가입이 완료되었습니다.', name });
+    await signupUser(email, password, nickName, profileImage);
+    res.status(200).json({ message: '회원가입이 완료되었습니다.', nickName });
   } catch (error) {
     res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     console.error(error);

@@ -20,4 +20,10 @@ export class FosterDiaryService {
     });
     return await fosterDiaryRepository.save(newFosterDiary);
   }
+
+  async getFosterDiary(fosterDiaryId: number): Promise<FosterDiary | null> {
+    return await fosterDiaryRepository.findOne({
+      where: { id: fosterDiaryId },
+    });
+  }
 }
