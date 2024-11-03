@@ -5,14 +5,14 @@ import { User } from '../../entity/User';
 export const signupUser = async (
   email: string,
   password: string,
-  name: string,
+  nickName: string,
   profileImage: string,
 ): Promise<User> => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = await userRepository.create({
     email,
     password: hashedPassword,
-    name,
+    nickName: nickName,
     profileImage,
   });
   return userRepository.save(newUser);

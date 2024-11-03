@@ -14,35 +14,24 @@ export class FosterDiary {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id!: number;
 
+  @Column({ type: 'varchar', length: 255, nullable: false })
+  title!: string;
+
   @Column({ type: 'text', nullable: false })
   content!: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: false })
+  place!: string;
 
   @Column({ type: 'text', nullable: false })
   imageUrl!: string;
 
   @Column({
     type: 'enum',
-    enum: [
-      '미용',
-      '오산완',
-      '먹방',
-      '일상',
-      '병원',
-      '모임',
-      '펫페어',
-      '정보공유',
-    ],
+    enum: ['미용', '오산완', '먹방', '일상', '병원'],
     nullable: false,
   })
-  tag!:
-    | '미용'
-    | '오산완'
-    | '먹방'
-    | '일상'
-    | '병원'
-    | '모임'
-    | '펫페어'
-    | '정보공유';
+  tag!: '미용' | '오산완' | '먹방' | '일상' | '병원';
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;

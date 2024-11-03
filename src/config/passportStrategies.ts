@@ -23,7 +23,7 @@ export const initPassportStrategies = (): void => {
 
           if (!user && email) {
             user = userRepository.create({
-              name: displayName,
+              nickName: displayName,
               email: email || undefined,
               socialId: id,
               socialProvider: 'google',

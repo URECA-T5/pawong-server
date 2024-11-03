@@ -11,7 +11,7 @@ declare global {
   namespace Express {
     interface User {
       id: number;
-      name: string;
+      nickName: string;
       email: string;
       password: string;
       socialId: string;
@@ -28,7 +28,7 @@ export class User {
   id!: number;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
-  name!: string;
+  nickName!: string;
 
   @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
   email!: string;

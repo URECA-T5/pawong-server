@@ -22,10 +22,10 @@ export class Pet {
 
   @Column({
     type: 'enum',
-    enum: ['dog', 'cat'],
+    enum: ['강아지', '고양이'],
     nullable: false,
   })
-  species!: 'dog' | 'cat';
+  species!: '강아지' | '고양이';
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   breed!: string;
@@ -35,16 +35,23 @@ export class Pet {
 
   @Column({
     type: 'enum',
-    enum: ['male', 'female'],
+    enum: ['긴급', '일반'],
     nullable: false,
   })
-  gender!: 'male' | 'female';
+  protectionType!: '긴급' | '일반';
+
+  @Column({
+    type: 'enum',
+    enum: ['남아', '여아'],
+    nullable: false,
+  })
+  gender!: '남아' | '여아';
 
   @Column({ type: 'boolean', nullable: false })
   isNeutered!: boolean;
 
-  @Column({ type: 'date', nullable: true })
-  birthDate!: Date;
+  @Column({ type: 'int', nullable: true })
+  age!: number;
 
   @Column({ type: 'float', nullable: false })
   weight!: number;
