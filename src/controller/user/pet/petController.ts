@@ -8,10 +8,10 @@ export const registerPet = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { userEmail, pet } = req.body;
+  const { userEmail, pet, vaccinations } = req.body;
 
   try {
-    await petService.registerPet(userEmail, pet);
+    await petService.registerPet(userEmail, pet, vaccinations);
     res.status(201).json({ message: '등록이 완료되었습니다.' });
   } catch (error) {
     const typedError = error as Error;
