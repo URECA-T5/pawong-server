@@ -3,6 +3,7 @@ import socialAuthRoutes from './auth/socialAuthRoutes';
 import localAuthRoutes from './auth/localAuthRoutes';
 import tokenRoutes from './auth/tokenRoutes';
 import petRoutes from './user/pet/petRoutes';
+import fosterDiaryRoutes from './user/pet/fosterDiary/fosterDiaryRoutes';
 const router: express.Router = express.Router();
 
 router.get(
@@ -17,4 +18,6 @@ router.use('/auth', localAuthRoutes);
 router.use('/auth', tokenRoutes);
 
 router.use('/pet', petRoutes);
+router.use('/fosterDiary', fosterDiaryRoutes);
+
 export default router;
