@@ -28,4 +28,17 @@ export class FosterDiaryService {
       where: { id: fosterDiaryId },
     });
   }
+
+  async getAllFosterDiaries(): Promise<Partial<FosterDiary>[]> {
+    const fosterDiaries = await fosterDiaryRepository.find({
+      relations: ['pet', 'pet.user'],
+    });
+
+    return fosterDiaries.map((diary: FosterDiary) => ({
+      tag: diary.tag,
+      title: diary.title,
+      authorName: diary.pet.user?.nickName,
+      createdAt: diary.createdAt,
+    }));
+  }
 }

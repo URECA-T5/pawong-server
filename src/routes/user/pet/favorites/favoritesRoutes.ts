@@ -8,6 +8,6 @@ import { authenticateToken } from '../../../../middleware/authMiddleware';
 const router: Router = Router();
 
 router.post('/add/:petId', authenticateToken, addFavoritePet);
-router.get('/get', authenticateToken, getFavortiePets);
+router.get('/getAll', authenticateToken, getFavortiePets);
 
 export default router;

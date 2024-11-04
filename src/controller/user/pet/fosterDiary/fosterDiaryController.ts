@@ -49,3 +49,19 @@ export const getFosterDiary = async (
     });
   }
 };
+
+export const getAllFosterDiaries = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const fosterDiaries = await fosterDiaryService.getAllFosterDiaries();
+
+    res.status(200).json(fosterDiaries);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: '일지 데이터를 가져오는 중 오류가 발생했습니다.' });
+  }
+};
