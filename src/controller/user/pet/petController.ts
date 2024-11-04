@@ -8,19 +8,13 @@ export const registerPet = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { pet, vaccinations } = req.body;
+  const { pet } = req.body;
   const profileImage: string = req.file ? req.file.path : '';
   const userId: number = req.user!.id;
   const petData = typeof pet === 'string' ? JSON.parse(pet) : pet;
-  const vaccinationsData =
-    typeof vaccinations === 'string' ? JSON.parse(vaccinations) : vaccinations;
+  console.log(petData);
   try {
-    const pet = await petService.registerPet(
-      userId,
-      petData,
-      vaccinationsData,
-      profileImage,
-    );
+    const pet = await petService.registerPet(userId, petData, profileImage);
     res.status(201).json({ message: '등록이 완료되었습니다.', pet });
   } catch (error) {
     const typedError = error as Error;

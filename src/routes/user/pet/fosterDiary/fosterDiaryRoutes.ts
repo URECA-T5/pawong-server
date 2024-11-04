@@ -11,7 +11,7 @@ const router: Router = Router();
 
 router.post(
   '/register',
-  upload.single('diaryImage'),
+  upload.single('fosterDiaryImage'),
   authenticateToken,
   registerFosterDiary,
 );

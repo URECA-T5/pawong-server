@@ -7,7 +7,6 @@ import {
 } from 'typeorm';
 import { User } from './User';
 import { FosterDiary } from './FosterDiary';
-import { Vaccination } from './Vaccination';
 
 @Entity()
 export class Pet {
@@ -50,6 +49,9 @@ export class Pet {
   @Column({ type: 'boolean', nullable: false })
   isNeutered!: boolean;
 
+  @Column({ type: 'json', nullable: true })
+  vaccinations!: string[];
+
   @Column({ type: 'int', nullable: true })
   age!: number;
 
@@ -64,7 +66,4 @@ export class Pet {
 
   @OneToMany(() => FosterDiary, (fosterDiary: FosterDiary) => fosterDiary.pet)
   fosterDiaries!: FosterDiary[];
-
-  @OneToMany(() => Vaccination, (vaccination: Vaccination) => vaccination.pet)
-  vaccinations!: Vaccination[];
 }

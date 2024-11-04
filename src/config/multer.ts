@@ -5,7 +5,7 @@ import { Request } from 'express';
 const storagePaths: { [key: string]: string } = {
   userProfileImage: 'uploads/userProfileImages',
   petProfileImage: 'uploads/petProfileImages',
-  diaryImage: 'uploads/diaryImages',
+  fosterDiaryImage: 'uploads/fosterDiaryImages',
 };
 
 const storage = multer.diskStorage({
