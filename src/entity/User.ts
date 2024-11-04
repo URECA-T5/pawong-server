@@ -55,6 +55,9 @@ export class User {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;
 
+  @Column({ type: 'json', nullable: true })
+  favoritePetIds!: number[];
+
   @OneToMany(() => Pet, (pet: Pet) => pet.user)
   pets!: Pet[];
 }
