@@ -5,10 +5,16 @@ import {
   getPetDetail,
   registerPet,
 } from '../../../controller/user/pet/petController';
+import { upload } from '../../../config/multer';
 
 const router: express.Router = express.Router();
 
-router.post('/register', authenticateToken, registerPet);
+router.post(
+  '/register',
+  upload.single('animalProfileImage'),
+  authenticateToken,
+  registerPet,
+);
 router.get('/get', getAllPets);
 router.get('/getDetail/:petId', getPetDetail);
 
