@@ -24,7 +24,7 @@ export class FosterDiary {
   place!: string;
 
   @Column({ type: 'text', nullable: false })
-  imageUrl!: string;
+  image!: string;
 
   @Column({
     type: 'enum',

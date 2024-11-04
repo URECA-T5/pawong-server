@@ -50,7 +50,7 @@ export class PetService {
     if (pet && pet.fosterDiaries) {
       const imgFosterDiaries = pet.fosterDiaries.map((diary) => ({
         id: diary.id,
-        imageUrl: diary.imageUrl,
+        image: diary.image,
       }));
 
       pet.fosterDiaries = imgFosterDiaries as any;

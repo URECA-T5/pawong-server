@@ -8,6 +8,7 @@ export class FosterDiaryService {
   async registerFosterDiary(
     petId: number,
     fosterDiaryData: Partial<FosterDiary>,
+    image: string,
   ): Promise<FosterDiary> {
     const pet = await petRepository.findOne({
       where: { id: petId },
@@ -17,6 +18,7 @@ export class FosterDiaryService {
     const newFosterDiary = fosterDiaryRepository.create({
       ...fosterDiaryData,
       pet,
+      image,
     });
     return await fosterDiaryRepository.save(newFosterDiary);
   }
