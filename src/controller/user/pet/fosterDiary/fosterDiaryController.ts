@@ -9,9 +9,11 @@ export const registerFosterDiary = async (
   res: Response,
 ): Promise<void> => {
   const { petId, fosterDiary } = req.body;
-
+  const image: string = req.file ? req.file.path : '';
+  const fosterDiaryData =
+    typeof fosterDiary === 'string' ? JSON.parse(fosterDiary) : fosterDiary;
   try {
-    await fosterDiaryService.registerFosterDiary(petId, fosterDiary);
+    await fosterDiaryService.registerFosterDiary(petId, fosterDiaryData, image);
     res.status(201).json({ message: '등록이 완료되었습니다.' });
   } catch (error) {
     const typedError = error as Error;

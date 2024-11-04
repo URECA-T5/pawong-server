@@ -12,13 +12,19 @@ export class PetService {
     userEmail: string,
     petData: Partial<Pet>,
     vaccinations: Vaccination[],
+    profileImage: string,
   ): Promise<Pet> {
     const user: User | null = await userRepository.findOne({
       where: { email: userEmail },
     });
     if (!user) throw new Error('유저를 찾을 수 없습니다.');
 
-    const newPet: Pet = petRepository.create({ ...petData, user });
+    const newPet: Pet = petRepository.create({
+      ...petData,
+      user,
+      profileImage,
+    });
+
     const savedPet: Pet = await petRepository.save(newPet);
 
     for (const vaccinationData of vaccinations) {
@@ -44,7 +50,7 @@ export class PetService {
     if (pet && pet.fosterDiaries) {
       const imgFosterDiaries = pet.fosterDiaries.map((diary) => ({
         id: diary.id,
-        imageUrl: diary.imageUrl,
+        image: diary.image,
       }));
 
       pet.fosterDiaries = imgFosterDiaries as any;
