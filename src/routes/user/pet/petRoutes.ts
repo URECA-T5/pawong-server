@@ -11,7 +11,7 @@ const router: express.Router = express.Router();
 
 router.post(
   '/register',
-  upload.single('animalProfileImage'),
+  upload.single('petProfileImage'),
   authenticateToken,
   registerPet,
 );

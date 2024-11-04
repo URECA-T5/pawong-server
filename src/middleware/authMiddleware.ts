@@ -23,7 +23,7 @@ export const authenticateToken = (
       console.error('Token verification error:', err);
       return res.status(403).json({ message: '토큰이 유효하지 않습니다.' });
     }
-    req.user = user;
+    req.user = user as { id: string };
     next();
   });
 };

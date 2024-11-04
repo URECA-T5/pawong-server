@@ -1,28 +1,21 @@
 import {
   petRepository,
-  userRepository,
   vaccinationRepository,
 } from '../../repository/repository';
 import { Pet } from '../../entity/Pet';
-import { User } from '../../entity/User';
 import { Vaccination } from '../../entity/Vaccination';
 
 export class PetService {
   async registerPet(
-    userEmail: string,
+    userId: number,
     petData: Partial<Pet>,
     vaccinations: Vaccination[],
     profileImage: string,
   ): Promise<Pet> {
-    const user: User | null = await userRepository.findOne({
-      where: { email: userEmail },
-    });
-    if (!user) throw new Error('유저를 찾을 수 없습니다.');
-
     const newPet: Pet = petRepository.create({
-      ...petData,
-      user,
+      user: { id: userId },
       profileImage,
+      ...petData,
     });
 
     const savedPet: Pet = await petRepository.save(newPet);
