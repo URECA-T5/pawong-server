@@ -41,4 +41,9 @@ export class FosterDiaryService {
       createdAt: diary.createdAt,
     }));
   }
+
+  async deleteFosterDiaryById(fosterDiaryId: number): Promise<boolean> {
+    const result = await fosterDiaryRepository.delete(fosterDiaryId);
+    return result.affected !== 0;
+  }
 }

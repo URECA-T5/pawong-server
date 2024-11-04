@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { authenticateToken } from '../../../../middleware/authMiddleware';
 import {
+  deleteFosterDiary,
   getAllFosterDiaries,
   getFosterDiary,
   registerFosterDiary,
@@ -17,5 +18,7 @@ router.post(
 );
 router.get('/get/:fosterDiaryId', getFosterDiary);
 router.get('/getAll', getAllFosterDiaries);
+
+router.delete('/delete/:fosterDiaryId', authenticateToken, deleteFosterDiary);
 
 export default router;

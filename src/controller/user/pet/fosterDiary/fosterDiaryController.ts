@@ -65,3 +65,25 @@ export const getAllFosterDiaries = async (
       .json({ message: '일지 데이터를 가져오는 중 오류가 발생했습니다.' });
   }
 };
+
+export const deleteFosterDiary = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const fosterDiaryId: number = parseInt(req.params.fosterDiaryId);
+  try {
+    const deleted =
+      await fosterDiaryService.deleteFosterDiaryById(fosterDiaryId);
+
+    if (deleted)
+      res.status(200).json({ message: '임시 보호 일지가 삭제되었습니다.' });
+    else res.status(404).json({ message: '삭제할 일지를 찾을 수 없습니다.' });
+  } catch (error) {
+    const typedError = error as Error;
+    console.error(typedError);
+    res.status(500).json({
+      message: '임시 보호 일지 삭제 중 오류가 발생했습니다.',
+      error: typedError.message,
+    });
+  }
+};
