@@ -4,7 +4,7 @@ import { Request } from 'express';
 
 const storagePaths: { [key: string]: string } = {
   userProfileImage: 'uploads/userProfileImages',
-  animalProfileImage: 'uploads/animalProfileImages',
+  petProfileImage: 'uploads/petProfileImages',
   diaryImage: 'uploads/diaryImages',
 };
 
