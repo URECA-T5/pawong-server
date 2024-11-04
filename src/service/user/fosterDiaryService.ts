@@ -42,6 +42,24 @@ export class FosterDiaryService {
     }));
   }
 
+  async updateFosterDiary(
+    userId: number,
+    fosterDiaryId: number,
+    updateFosterDiary: FosterDiary,
+  ) {
+    const fosterDiary = await fosterDiaryRepository.findOne({
+      where: { id: fosterDiaryId },
+      relations: ['pet', 'pet.user'],
+    });
+
+    if (!fosterDiary) throw new Error('임시 보호 일지를 찾을 수 없습니다.');
+    if (fosterDiary.pet.user.id !== userId) return false;
+
+    Object.assign(fosterDiary, updateFosterDiary);
+    await fosterDiaryRepository.save(fosterDiary);
+    return true;
+  }
+
   async deleteFosterDiaryById(fosterDiaryId: number): Promise<boolean> {
     const result = await fosterDiaryRepository.delete(fosterDiaryId);
     return result.affected !== 0;

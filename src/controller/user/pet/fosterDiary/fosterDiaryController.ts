@@ -66,6 +66,37 @@ export const getAllFosterDiaries = async (
   }
 };
 
+export const updateFosterDiary = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const userId: number = req.user!.id;
+  const { fosterDiaryId } = req.params;
+
+  try {
+    const updateFosterDiary: FosterDiary = req.body;
+    const fosterDiaryImage = req.file;
+
+    if (fosterDiaryImage) updateFosterDiary.image = fosterDiaryImage.path;
+
+    const result: boolean = await fosterDiaryService.updateFosterDiary(
+      userId,
+      parseInt(fosterDiaryId, 10),
+      updateFosterDiary,
+    );
+
+    if (result)
+      res.status(200).json({ message: '일지가 성공적으로 수정되었습니다.' });
+    else
+      res
+        .status(404)
+        .json({ message: '일지를 찾을 수 없거나 권한이 없습니다.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '일지 수정에 실패했습니다.' });
+  }
+};
+
 export const deleteFosterDiary = async (
   req: Request,
   res: Response,

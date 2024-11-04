@@ -5,6 +5,7 @@ import {
   getAllFosterDiaries,
   getFosterDiary,
   registerFosterDiary,
+  updateFosterDiary,
 } from '../../../../controller/user/pet/fosterDiary/fosterDiaryController';
 import { upload } from '../../../../config/multer';
 
@@ -18,6 +19,13 @@ router.post(
 );
 router.get('/get/:fosterDiaryId', getFosterDiary);
 router.get('/getAll', getAllFosterDiaries);
+
+router.put(
+  '/update/:fosterDiaryId',
+  upload.single('fosterDiaryImage'),
+  authenticateToken,
+  updateFosterDiary,
+);
 
 router.delete('/delete/:fosterDiaryId', authenticateToken, deleteFosterDiary);
 
