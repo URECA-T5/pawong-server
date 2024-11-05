@@ -35,6 +35,7 @@ export class FosterDiaryService {
     });
 
     return fosterDiaries.map((diary: FosterDiary) => ({
+      id: diary.id,
       tag: diary.tag,
       title: diary.title,
       authorName: diary.pet.user?.nickName,
