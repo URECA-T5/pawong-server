@@ -40,7 +40,15 @@ export const localLogin = async (
     const accessToken = generateAccessToken(user.id.toString());
     const refreshToken = generateRefreshToken(user.id.toString());
 
-    res.status(200).json({ message: '로그인 성공', accessToken, refreshToken });
+    res.status(200).json({
+      message: '로그인 성공',
+      accessToken,
+      refreshToken,
+      user: {
+        nickName: user.nickName,
+        profileImage: user.profileImage,
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     console.error(error);
