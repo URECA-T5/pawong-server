@@ -37,4 +37,12 @@ export class PetService {
 
     return pet;
   }
+
+  async getCareListByUserId(userId: number): Promise<Pet[]> {
+    const pets: Pet[] = await petRepository.find({
+      where: { user: { id: userId } },
+      select: ['id', 'name', 'breed', 'profileImage'],
+    });
+    return pets;
+  }
 }

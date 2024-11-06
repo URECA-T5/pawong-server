@@ -69,3 +69,17 @@ export const getPetDetail = async (
     });
   }
 };
+
+export const getCareList = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const userId: number = req.user!.id;
+  try {
+    const petCareList = await petService.getCareListByUserId(userId);
+    res.status(200).json(petCareList);
+  } catch (error) {
+    console.error('임보 중인 동물 불러오기 실패:', error);
+    res.status(500).json({ message: '서버 에러' });
+  }
+};
