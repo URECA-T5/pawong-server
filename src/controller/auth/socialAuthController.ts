@@ -21,7 +21,10 @@ export const googleCallback = (req: Request, res: Response): void => {
   const accessToken = generateAccessToken(user.id.toString());
   const refreshToken = generateRefreshToken(user.id.toString());
 
+  const nickName = encodeURIComponent(user.nickName);
+  const profileImage = encodeURIComponent(user.profileImage!);
+
   res.redirect(
-    `http://localhost:3000/auth/success?accessToken=${accessToken}&refreshToken=${refreshToken}`,
+    `http://localhost:3000/socialLogin?accessToken=${accessToken}&refreshToken=${refreshToken}&nickName=${nickName}&profileImage=${profileImage}`,
   );
 };
