@@ -2,6 +2,7 @@ import express from 'express';
 import { authenticateToken } from '../../../middleware/authMiddleware';
 import {
   getAllPets,
+  getCareList,
   getPetDetail,
   registerPet,
 } from '../../../controller/user/pet/petController';
@@ -17,5 +18,6 @@ router.post(
 );
 router.get('/getAll', getAllPets);
 router.get('/getDetail/:petId', getPetDetail);
+router.get('/getCareList', authenticateToken, getCareList);
 
 export default router;
