@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Pet } from './Pet';
+import { DonationItem } from './DonationItem';
 
 declare global {
   namespace Express {
@@ -52,6 +53,9 @@ export class User {
   @Column({ type: 'boolean', default: false })
   isVerified!: boolean;
 
+  @Column({ type: 'boolean', default: false })
+  isAdmin!: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;
 
@@ -60,4 +64,10 @@ export class User {
 
   @OneToMany(() => Pet, (pet: Pet) => pet.user)
   pets!: Pet[];
+
+  @OneToMany(
+    () => DonationItem,
+    (donationItem: DonationItem) => donationItem.user,
+  )
+  donationItems!: DonationItem[];
 }
