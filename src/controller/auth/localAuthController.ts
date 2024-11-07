@@ -3,6 +3,7 @@ import {
   findUserByEmail,
   signupUser,
   validatePassword,
+  updateUserInfo,
 } from '../../service/auth/localAuthService';
 import { generateAccessToken, generateRefreshToken } from '../../config/jwt';
 
@@ -52,5 +53,35 @@ export const localLogin = async (
   } catch (error) {
     res.status(500).json({ message: '서버 오류가 발생했습니다.' });
     console.error(error);
+  }
+};
+
+export const updateUser = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const userId: number = req.user!.id;
+  const { nickName, password } = req.body;
+
+  const profileImage = req.file ? req.file.path : undefined;
+
+  try {
+    const updatedUser = await updateUserInfo(userId, {
+      nickName,
+      password,
+      profileImage,
+    });
+
+    if (!updatedUser) {
+      res.status(404).json({ message: '유저를 찾을 수 없습니다.' });
+      return;
+    }
+
+    res
+      .status(200)
+      .json({ message: '유저 정보가 업데이트되었습니다.', user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '유저 정보 업데이트에 실패했습니다.' });
   }
 };

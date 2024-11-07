@@ -28,3 +28,19 @@ export const validatePassword = async (
 ): Promise<boolean> => {
   return bcrypt.compare(inputPassword, userPassword);
 };
+
+export const updateUserInfo = async (
+  userId: number,
+  updateData: Partial<User>,
+): Promise<User | null> => {
+  const user = await userRepository.findOne({ where: { id: userId } });
+  if (!user) return null;
+
+  if (updateData.password) {
+    const hashedPassword = await bcrypt.hash(updateData.password, 10);
+    updateData.password = hashedPassword;
+  }
+
+  Object.assign(user, updateData);
+  return await userRepository.save(user);
+};
