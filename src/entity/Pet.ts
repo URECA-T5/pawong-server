@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { User } from './User';
 import { FosterDiary } from './FosterDiary';
+import { Donation } from './Donation';
 
 @Entity()
 export class Pet {
@@ -66,4 +67,7 @@ export class Pet {
 
   @OneToMany(() => FosterDiary, (fosterDiary: FosterDiary) => fosterDiary.pet)
   fosterDiaries!: FosterDiary[];
+
+  @OneToMany(() => Donation, (donation: Donation) => donation.donationItem)
+  donations!: Donation[];
 }

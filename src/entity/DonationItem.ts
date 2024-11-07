@@ -3,9 +3,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './User';
+import { Donation } from './Donation';
 
 @Entity()
 export class DonationItem {
@@ -37,4 +39,7 @@ export class DonationItem {
   @ManyToOne(() => User, (user: User) => user.donationItems)
   @JoinColumn({ name: 'userId' })
   user!: User;
+
+  @OneToMany(() => Donation, (donation: Donation) => donation.donationItem)
+  donations!: Donation[];
 }

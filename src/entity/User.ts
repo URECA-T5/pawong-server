@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Pet } from './Pet';
 import { DonationItem } from './DonationItem';
+import { Donation } from './Donation';
 
 declare global {
   namespace Express {
@@ -70,4 +71,7 @@ export class User {
     (donationItem: DonationItem) => donationItem.user,
   )
   donationItems!: DonationItem[];
+
+  @OneToMany(() => Donation, (donation: Donation) => donation.user)
+  donations!: Donation[];
 }
