@@ -80,3 +80,24 @@ export const getDetailDonationItem = async (
     });
   }
 };
+
+export const deleteDonationItem = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { donationItemId } = req.params;
+    await donationItemService.deleteDonationItem(Number(donationItemId));
+
+    res.status(200).json({
+      message: '후원 물품이 성공적으로 삭제되었습니다.',
+    });
+  } catch (error) {
+    const typedError = error as Error;
+    console.error(typedError);
+    res.status(500).json({
+      message: '후원 물품 삭제에 실패했습니다.',
+      error: typedError.message,
+    });
+  }
+};

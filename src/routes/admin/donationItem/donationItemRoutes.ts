@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { authenticateToken } from '../../../middleware/authMiddleware';
 import {
+  deleteDonationItem,
   getAllDonationItem,
   getDetailDonationItem,
   registerDonationItem,
@@ -22,4 +23,5 @@ router.post(
 router.get('/getAll', getAllDonationItem);
 router.get('/getDetail/:donationItemId', getDetailDonationItem);
 
+router.delete('/delete/:donationItemId', deleteDonationItem);
 export default router;
