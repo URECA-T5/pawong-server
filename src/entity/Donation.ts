@@ -28,6 +28,12 @@ export class Donation {
   })
   isDelivery!: '거절' | '받기' | '';
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  receivedPhoneNumber?: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  receivedAddress?: string;
+
   @ManyToOne(() => User, (user) => user.donations, { nullable: false })
   @JoinColumn({ name: 'userId' })
   user!: User;

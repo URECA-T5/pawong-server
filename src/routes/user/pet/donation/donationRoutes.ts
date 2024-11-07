@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  acceptDonation,
   getDonationList,
   refuseDonation,
   registerDonation,
@@ -17,5 +18,6 @@ router.post(
 router.get('/getList/:petId', authenticateToken, getDonationList);
 
 router.patch('/refuse/:donationId', authenticateToken, refuseDonation);
+router.patch('/accept/:donationId', authenticateToken, acceptDonation);
 
 export default router;

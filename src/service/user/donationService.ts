@@ -51,4 +51,29 @@ export const donationService = {
       throw new Error('후원 내역 삭제에 실패했습니다.');
     }
   },
+
+  async acceptDonationService(
+    donationId: number,
+    receivedPhoneNumber: string,
+    receivedAddress: string,
+  ) {
+    try {
+      const donation = await donationRepository.findOne({
+        where: { id: donationId },
+      });
+
+      if (!donation) return null; // 후원 내역이 없으면 null 반환
+
+      donation.isDelivery = '받기';
+      donation.receivedPhoneNumber = receivedPhoneNumber;
+      donation.receivedAddress = receivedAddress;
+
+      await donationRepository.save(donation);
+
+      return donation; // 업데이트된 후원 내역 반환
+    } catch (error) {
+      console.error('Error accepting donation:', error);
+      throw new Error('후원 내역 업데이트에 실패했습니다.');
+    }
+  },
 };

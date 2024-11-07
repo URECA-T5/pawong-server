@@ -56,3 +56,22 @@ export const refuseDonation = async (req: Request, res: Response) => {
     res.status(500).json({ message: '후원 거절에 실패했습니다.' });
   }
 };
+
+export const acceptDonation = async (req: Request, res: Response) => {
+  const { donationId } = req.params;
+  const { receivedPhoneNumber, receivedAddress } = req.body;
+  try {
+    const donation = await donationService.acceptDonationService(
+      Number(donationId),
+      receivedPhoneNumber,
+      receivedAddress,
+    );
+    res.status(200).json({
+      message: '후원 물품 받을 주소를 등록했습니다',
+      donation,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '후원 내역 업데이트에 실패했습니다.' });
+  }
+};
