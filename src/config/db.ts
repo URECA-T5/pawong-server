@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 import { User } from '../entity/User';
 import { Pet } from '../entity/Pet';
 import { FosterDiary } from '../entity/FosterDiary';
+import { DonationItem } from '../entity/DonationItem';
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
@@ -10,7 +11,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [User, Pet, FosterDiary],
+  entities: [User, Pet, FosterDiary, DonationItem],
   synchronize: true,
 });
 

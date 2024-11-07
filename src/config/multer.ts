@@ -6,6 +6,8 @@ const storagePaths: { [key: string]: string } = {
   userProfileImage: 'uploads/userProfileImages',
   petProfileImage: 'uploads/petProfileImages',
   fosterDiaryImage: 'uploads/fosterDiaryImages',
+  donationItemImages: 'uploads/donationItemImages',
+  donationItemDetailImage: 'uploads/donationItemDetailImages',
 };
 
 const storage = multer.diskStorage({
