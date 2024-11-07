@@ -37,6 +37,7 @@ export const getDonationList = async (req: Request, res: Response) => {
       quantity: donation.quantity,
       createdAt: donation.createdAt,
       isDelivery: donation.isDelivery,
+      donorUserId: donation.user.id,
     }));
 
     res.status(200).json(donationHistory);

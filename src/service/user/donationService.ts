@@ -24,12 +24,12 @@ export const donationService = {
     try {
       const donations = await donationRepository.find({
         where: {
-          user: { id: userId },
           pet: { id: petId },
         },
-        relations: ['donationItem'],
+        relations: ['donationItem', 'user'],
       });
-      return donations;
+
+      return donations.filter((donation) => donation.user.id === userId);
     } catch (error) {
       console.error('후원 내역 조회 실패:', error);
       throw new Error('후원 내역 조회에 실패했습니다.');
@@ -62,7 +62,7 @@ export const donationService = {
         where: { id: donationId },
       });
 
-      if (!donation) return null; // 후원 내역이 없으면 null 반환
+      if (!donation) return null;
 
       donation.isDelivery = '받기';
       donation.receivedPhoneNumber = receivedPhoneNumber;
@@ -70,7 +70,7 @@ export const donationService = {
 
       await donationRepository.save(donation);
 
-      return donation; // 업데이트된 후원 내역 반환
+      return donation;
     } catch (error) {
       console.error('Error accepting donation:', error);
       throw new Error('후원 내역 업데이트에 실패했습니다.');
