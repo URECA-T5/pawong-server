@@ -5,6 +5,7 @@ import tokenRoutes from './auth/tokenRoutes';
 import petRoutes from './user/pet/petRoutes';
 import fosterDiaryRoutes from './user/pet/fosterDiary/fosterDiaryRoutes';
 import favoritesRoutes from './user/pet/favorites/favoritesRoutes';
+import donationItemRoutes from './admin/donationItem/donationItemRoutes';
 const router: express.Router = express.Router();
 
 router.get(
@@ -21,5 +22,7 @@ router.use('/auth', tokenRoutes);
 router.use('/pet', petRoutes);
 router.use('/fosterDiary', fosterDiaryRoutes);
 router.use('/favorites', favoritesRoutes);
+
+router.use('/donationItem', donationItemRoutes);
 
 export default router;
