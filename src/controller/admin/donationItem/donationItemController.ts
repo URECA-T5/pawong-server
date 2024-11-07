@@ -9,15 +9,26 @@ export const registerDonationItem = async (
 ): Promise<void> => {
   try {
     const userId = req.user!.id;
-    const donationItemImage: string = req.file ? req.file.path : '';
-    const { name, price, manufacturer } = req.body;
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] }; // req.files 타입 지정
+
+    const donationItemImages: string[] = files?.donationItemImages
+      ? files.donationItemImages.map((file) => file.path)
+      : [];
+    const donationItemDetailImage: string = files?.donationItemDetailImage
+      ? files.donationItemDetailImage[0].path
+      : '';
+    const { name, price, brand, size, expirationDate, tag } = req.body;
 
     const donationItem = await donationItemService.registerDonationItem(
       userId,
       name,
       price,
-      donationItemImage,
-      manufacturer,
+      donationItemImages,
+      donationItemDetailImage,
+      brand,
+      size,
+      new Date(expirationDate),
+      tag,
     );
     console.log(donationItem);
     res.status(201).json({

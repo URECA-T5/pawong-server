@@ -10,10 +10,14 @@ const router = Router();
 
 router.post(
   '/register',
-  upload.single('donationItemImage'),
+  upload.fields([
+    { name: 'donationItemImages', maxCount: 3 },
+    { name: 'donationItemDetailImage', maxCount: 1 },
+  ]),
   authenticateToken,
   registerDonationItem,
 );
 
 router.get('/getAll', getAllDonationItem);
+
 export default router;
