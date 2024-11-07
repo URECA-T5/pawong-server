@@ -17,7 +17,7 @@ router.post(
   registerPet,
 );
 router.get('/getAll', getAllPets);
-router.get('/getDetail/:petId', getPetDetail);
+router.get('/getDetail/:petId', authenticateToken, getPetDetail);
 router.get('/getCareList', authenticateToken, getCareList);
 
 export default router;

@@ -23,7 +23,7 @@ export class PetService {
   async getPetById(petId: number): Promise<Pet | null> {
     const pet: Pet | null = await petRepository.findOne({
       where: { id: petId },
-      relations: ['fosterDiaries'],
+      relations: ['user', 'fosterDiaries'],
     });
 
     if (pet && pet.fosterDiaries) {

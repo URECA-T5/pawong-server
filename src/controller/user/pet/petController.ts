@@ -52,14 +52,34 @@ export const getPetDetail = async (
   res: Response,
 ): Promise<void> => {
   const { petId } = req.params;
+  const userId: number = req.user!.id;
   try {
     const pet: Pet | null = await petService.getPetById(Number(petId));
     if (!pet) {
       res.status(404).json({ message: '펫을 찾을 수 없습니다.' });
       return;
     }
-
-    res.status(200).json({ pet });
+    const isUserPet = pet.user.id === userId;
+    const petData = {
+      id: pet.id,
+      name: pet.name,
+      profileImage: pet.profileImage,
+      species: pet.species,
+      breed: pet.breed,
+      rescueLocation: pet.rescueLocation,
+      protectionType: pet.protectionType,
+      gender: pet.gender,
+      isNeutered: pet.isNeutered,
+      vaccinations: pet.vaccinations,
+      age: pet.age,
+      weight: pet.weight,
+      info: pet.info,
+      fosterDiaries: pet.fosterDiaries.map((fosterDiary) => ({
+        id: fosterDiary.id,
+        image: fosterDiary.image,
+      })),
+    };
+    res.status(200).json({ pet: petData, isUserPet });
   } catch (error) {
     const typedError = error as Error;
     console.error(typedError);
