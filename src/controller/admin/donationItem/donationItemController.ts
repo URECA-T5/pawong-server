@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { DonationItemService } from '../../../service/admin/donationItemService';
+import { DonationItem } from '../../../entity/DonationItem';
 
 const donationItemService = new DonationItemService();
 
@@ -56,6 +57,25 @@ export const getAllDonationItem = async (
     console.error(typedError);
     res.status(500).json({
       message: '후원 물품 볼러오기를 실패했습니다.',
+      error: typedError.message,
+    });
+  }
+};
+
+export const getDetailDonationItem = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { donationItemId } = req.params;
+    const donationItem: DonationItem =
+      await donationItemService.getDonationItemById(Number(donationItemId));
+    res.status(200).json(donationItem);
+  } catch (error) {
+    const typedError = error as Error;
+    console.error(typedError);
+    res.status(500).json({
+      message: '후원 물품 정보 조회에 실패했습니다.',
       error: typedError.message,
     });
   }

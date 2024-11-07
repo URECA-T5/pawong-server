@@ -38,4 +38,13 @@ export class DonationItemService {
   async getAll(): Promise<DonationItem[]> {
     return await donationItemRepository.find();
   }
+
+  async getDonationItemById(donationItemId: number): Promise<DonationItem> {
+    const donationItem = await donationItemRepository.findOne({
+      where: { id: donationItemId },
+    });
+    if (!donationItem) throw new Error('해당 후원 물품을 찾을 수 없습니다.');
+
+    return donationItem;
+  }
 }

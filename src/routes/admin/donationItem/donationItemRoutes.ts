@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { authenticateToken } from '../../../middleware/authMiddleware';
 import {
   getAllDonationItem,
+  getDetailDonationItem,
   registerDonationItem,
 } from '../../../controller/admin/donationItem/donationItemController';
 import { upload } from '../../../config/multer';
@@ -19,5 +20,6 @@ router.post(
 );
 
 router.get('/getAll', getAllDonationItem);
+router.get('/getDetail/:donationItemId', getDetailDonationItem);
 
 export default router;
