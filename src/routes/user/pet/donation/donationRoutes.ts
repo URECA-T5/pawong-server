@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   acceptDonation,
   getDonationList,
+  getDonationListByPetId,
   refuseDonation,
   registerDonation,
 } from '../../../../controller/user/pet/donation/donationController';
@@ -15,7 +16,8 @@ router.post(
   registerDonation,
 );
 
-router.get('/getList/:petId', authenticateToken, getDonationList);
+router.get('/getList/:petId', authenticateToken, getDonationListByPetId);
+router.get('/getList', authenticateToken, getDonationList);
 
 router.patch('/refuse/:donationId', authenticateToken, refuseDonation);
 router.patch('/accept/:donationId', authenticateToken, acceptDonation);

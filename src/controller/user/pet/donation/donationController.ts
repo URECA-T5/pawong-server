@@ -19,7 +19,7 @@ export const registerDonation = async (req: Request, res: Response) => {
   }
 };
 
-export const getDonationList = async (req: Request, res: Response) => {
+export const getDonationListByPetId = async (req: Request, res: Response) => {
   const userId: number = req.user!.id;
   const { petId } = req.params;
 
@@ -44,6 +44,35 @@ export const getDonationList = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: '후원 내역 조회에 실패했습니다.' });
+  }
+};
+
+export const getDonationList = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user!.id;
+
+    const donations = await donationService.getDonationsByUser(userId);
+
+    if (!donations) {
+      res.status(404).json({ message: '후원 기록이 없습니다.' });
+      return;
+    }
+
+    const donationHistory = donations.map((donation) => ({
+      donationId: donation.id,
+      donationItemName: donation.donationItem.name,
+      donationItemPrice: donation.donationItem.price,
+      donationItemImages: donation.donationItem.donationItemImages[0],
+      createdAt: donation.createdAt,
+      quantity: donation.quantity,
+      userId: donation.user.id,
+      userNickName: donation.user.nickName,
+    }));
+
+    res.status(200).json(donationHistory);
+  } catch (error) {
+    console.error('후원 기록 조회 중 오류 발생:', error);
+    res.status(500).json({ message: '서버 오류' });
   }
 };
 

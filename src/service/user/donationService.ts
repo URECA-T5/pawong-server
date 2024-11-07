@@ -36,6 +36,20 @@ export const donationService = {
     }
   },
 
+  async getDonationsByUser(userId: number): Promise<Donation[]> {
+    try {
+      const donations = await donationRepository.find({
+        where: { user: { id: userId } },
+        relations: ['donationItem', 'user'],
+      });
+
+      return donations;
+    } catch (error) {
+      console.error('후원 내역 조회 실패:', error);
+      throw new Error('후원 내역 조회에 실패했습니다.');
+    }
+  },
+
   async refuseDonation(donationId: number) {
     try {
       const donation = await donationRepository.findOne({
