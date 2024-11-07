@@ -26,10 +26,10 @@ export const donationService = {
         where: {
           pet: { id: petId },
         },
-        relations: ['donationItem', 'user'],
+        relations: ['donationItem', 'user', 'pet'],
       });
 
-      return donations.filter((donation) => donation.user.id === userId);
+      return donations;
     } catch (error) {
       console.error('후원 내역 조회 실패:', error);
       throw new Error('후원 내역 조회에 실패했습니다.');
