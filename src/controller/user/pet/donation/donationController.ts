@@ -45,3 +45,14 @@ export const getDonationList = async (req: Request, res: Response) => {
     res.status(500).json({ message: '후원 내역 조회에 실패했습니다.' });
   }
 };
+
+export const refuseDonation = async (req: Request, res: Response) => {
+  const { donationId } = req.params;
+  try {
+    await donationService.refuseDonation(Number(donationId));
+    res.status(200).json({ message: '후원을 거절했습니다.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '후원 거절에 실패했습니다.' });
+  }
+};

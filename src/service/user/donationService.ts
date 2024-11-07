@@ -35,4 +35,20 @@ export const donationService = {
       throw new Error('후원 내역 조회에 실패했습니다.');
     }
   },
+
+  async refuseDonation(donationId: number) {
+    try {
+      const donation = await donationRepository.findOne({
+        where: { id: donationId },
+      });
+
+      if (!donation) return null;
+      await donationRepository.update(donationId, { isDelivery: '거절' });
+
+      return await donationRepository.findOne({ where: { id: donationId } });
+    } catch (error) {
+      console.error('Error deleting donation:', error);
+      throw new Error('후원 내역 삭제에 실패했습니다.');
+    }
+  },
 };
