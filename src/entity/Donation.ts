@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -15,7 +16,7 @@ export class Donation {
   id!: number;
 
   @Column({ type: 'int', nullable: false })
-  amount!: number;
+  quantity!: number;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;
@@ -27,13 +28,16 @@ export class Donation {
   isDelivery!: '거절' | '받기';
 
   @ManyToOne(() => User, (user) => user.donations, { nullable: false })
+  @JoinColumn({ name: 'userId' })
   user!: User;
 
   @ManyToOne(() => Pet, (pet) => pet.donations, { nullable: false })
+  @JoinColumn({ name: 'petId' })
   pet!: Pet;
 
   @ManyToOne(() => DonationItem, (donationItem) => donationItem.donations, {
     nullable: false,
   })
+  @JoinColumn({ name: 'donationItemId' })
   donationItem!: DonationItem;
 }

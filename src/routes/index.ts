@@ -6,6 +6,7 @@ import petRoutes from './user/pet/petRoutes';
 import fosterDiaryRoutes from './user/pet/fosterDiary/fosterDiaryRoutes';
 import favoritesRoutes from './user/pet/favorites/favoritesRoutes';
 import donationItemRoutes from './admin/donationItem/donationItemRoutes';
+import donationRoutes from './user/pet/donation/donationRoutes';
 const router: express.Router = express.Router();
 
 router.get(
@@ -25,4 +26,5 @@ router.use('/favorites', favoritesRoutes);
 
 router.use('/donationItem', donationItemRoutes);
 
+router.use('/donation', donationRoutes);
 export default router;
