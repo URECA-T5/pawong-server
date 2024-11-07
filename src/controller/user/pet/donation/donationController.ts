@@ -12,10 +12,36 @@ export const registerDonation = async (req: Request, res: Response) => {
       Number(donationItemId),
       quantity,
     );
-    console.log('donation:' + donation);
-    res.status(201).json({ message: '후원 등록에 성공했습니다. donation' });
+    res.status(201).json({ message: '후원 등록에 성공했습니다.', donation });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: '후원 등록에 실패했습니다.' });
+  }
+};
+
+export const getDonationList = async (req: Request, res: Response) => {
+  const userId: number = req.user!.id;
+  const { petId } = req.params;
+
+  try {
+    const donations = await donationService.getDonationsByUserAndPet(
+      userId,
+      Number(petId),
+    );
+
+    const donationHistory = donations.map((donation) => ({
+      donationId: donation.id,
+      donationItemName: donation.donationItem.name,
+      donationItemPrice: donation.donationItem.price,
+      donationItemImages: donation.donationItem.donationItemImages[0],
+      quantity: donation.quantity,
+      createdAt: donation.createdAt,
+      isDelivery: donation.isDelivery,
+    }));
+
+    res.status(200).json(donationHistory);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '후원 내역 조회에 실패했습니다.' });
   }
 };

@@ -23,9 +23,10 @@ export class Donation {
 
   @Column({
     type: 'enum',
-    enum: ['거절', '받기'],
+    enum: ['거절', '받기', ''],
+    default: '',
   })
-  isDelivery!: '거절' | '받기';
+  isDelivery!: '거절' | '받기' | '';
 
   @ManyToOne(() => User, (user) => user.donations, { nullable: false })
   @JoinColumn({ name: 'userId' })
