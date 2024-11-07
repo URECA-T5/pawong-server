@@ -38,8 +38,21 @@ export const getFosterDiary = async (
       res.status(404).json({ message: '일지를 찾을 수 없습니다.' });
       return;
     }
-
-    res.status(200).json(fosterDiary);
+    const response = {
+      id: fosterDiary.id,
+      title: fosterDiary.title,
+      content: fosterDiary.content,
+      place: fosterDiary.place,
+      image: fosterDiary.image,
+      tag: fosterDiary.tag,
+      createdAt: fosterDiary.createdAt,
+      updatedAt: fosterDiary.updatedAt,
+      user: {
+        nickname: fosterDiary.pet.user.nickName,
+        profileImage: fosterDiary.pet.user.profileImage,
+      },
+    };
+    res.status(200).json(response);
   } catch (error) {
     const typedError = error as Error;
     console.error(typedError);

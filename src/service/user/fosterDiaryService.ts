@@ -26,6 +26,7 @@ export class FosterDiaryService {
   async getFosterDiary(fosterDiaryId: number): Promise<FosterDiary | null> {
     return await fosterDiaryRepository.findOne({
       where: { id: fosterDiaryId },
+      relations: ['pet', 'pet.user'],
     });
   }
 
