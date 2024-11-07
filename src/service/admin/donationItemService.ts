@@ -2,6 +2,7 @@ import {
   donationItemRepository,
   userRepository,
 } from '../../repository/repository';
+import { DonationItem } from '../../entity/DonationItem';
 
 export class DonationItemService {
   async registerDonationItem(
@@ -24,5 +25,9 @@ export class DonationItemService {
     await donationItemRepository.save(donationItem);
 
     return donationItem;
+  }
+
+  async getAll(): Promise<DonationItem[]> {
+    return await donationItemRepository.find();
   }
 }

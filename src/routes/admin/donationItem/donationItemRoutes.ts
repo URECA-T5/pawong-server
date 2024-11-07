@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import { authenticateToken } from '../../../middleware/authMiddleware';
-import { registerDonationItem } from '../../../controller/admin/donationItem/donationItemController';
+import {
+  getAllDonationItem,
+  registerDonationItem,
+} from '../../../controller/admin/donationItem/donationItemController';
 import { upload } from '../../../config/multer';
 
 const router = Router();
@@ -11,4 +14,6 @@ router.post(
   authenticateToken,
   registerDonationItem,
 );
+
+router.get('/getAll', getAllDonationItem);
 export default router;
