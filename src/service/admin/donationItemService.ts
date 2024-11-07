@@ -10,11 +10,9 @@ export class DonationItemService {
     name: string,
     price: number,
     donationItemImages: string[],
-    donationItemDetailImage: string,
-    brand: string,
-    size: string[],
-    expirationDate: Date,
+    donationItemDetailImages: string[],
     tag: '강아지' | '고양이',
+    brand: string,
   ) {
     const user = await userRepository.findOne({ where: { id: userId } });
     if (!user) throw new Error('사용자를 찾을 수 없습니다.');
@@ -23,11 +21,9 @@ export class DonationItemService {
       name,
       price,
       donationItemImages,
-      donationItemDetailImage,
-      brand,
-      size,
-      expirationDate,
+      donationItemDetailImages,
       tag,
+      brand,
       user,
     });
     await donationItemRepository.save(donationItem);

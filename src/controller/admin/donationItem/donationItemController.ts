@@ -10,26 +10,24 @@ export const registerDonationItem = async (
 ): Promise<void> => {
   try {
     const userId = req.user!.id;
-    const files = req.files as { [fieldname: string]: Express.Multer.File[] }; // req.files 타입 지정
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
 
     const donationItemImages: string[] = files?.donationItemImages
       ? files.donationItemImages.map((file) => file.path)
       : [];
-    const donationItemDetailImage: string = files?.donationItemDetailImage
-      ? files.donationItemDetailImage[0].path
-      : '';
-    const { name, price, brand, size, expirationDate, tag } = req.body;
+    const donationItemDetailImages: string[] = files?.donationItemDetailImages
+      ? files.donationItemImages.map((file) => file.path)
+      : [];
+    const { name, price, brand, tag } = req.body;
 
     const donationItem = await donationItemService.registerDonationItem(
       userId,
       name,
       price,
       donationItemImages,
-      donationItemDetailImage,
-      brand,
-      size,
-      new Date(expirationDate),
+      donationItemDetailImages,
       tag,
+      brand,
     );
     console.log(donationItem);
     res.status(201).json({
@@ -51,7 +49,15 @@ export const getAllDonationItem = async (
 ): Promise<void> => {
   try {
     const donationItemList = await donationItemService.getAll();
-    res.status(200).json(donationItemList);
+    const response = donationItemList.map((item) => ({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      brand: item.brand,
+      donationItemImages: item.donationItemImages[0],
+      tag: item.tag,
+    }));
+    res.status(200).json(response);
   } catch (error) {
     const typedError = error as Error;
     console.error(typedError);

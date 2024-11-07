@@ -14,7 +14,7 @@ router.post(
   '/register',
   upload.fields([
     { name: 'donationItemImages', maxCount: 3 },
-    { name: 'donationItemDetailImage', maxCount: 1 },
+    { name: 'donationItemDetailImages', maxCount: 3 },
   ]),
   authenticateToken,
   registerDonationItem,

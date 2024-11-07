@@ -24,14 +24,8 @@ export class DonationItem {
   @Column({ type: 'json', nullable: false })
   donationItemImages!: string[];
 
-  @Column({ type: 'text', nullable: false })
-  donationItemDetailImage!: string;
-
   @Column({ type: 'json', nullable: false })
-  size!: string[];
-
-  @Column({ type: 'date', nullable: false })
-  expirationDate!: Date;
+  donationItemDetailImages!: string[];
 
   @Column({
     type: 'enum',
