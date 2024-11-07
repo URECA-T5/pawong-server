@@ -22,14 +22,12 @@ export const donationService = {
     petId: number,
   ): Promise<Donation[]> {
     try {
-      const donations = await donationRepository.find({
+      return await donationRepository.find({
         where: {
           pet: { id: petId },
         },
         relations: ['donationItem', 'user', 'pet'],
       });
-
-      return donations;
     } catch (error) {
       console.error('후원 내역 조회 실패:', error);
       throw new Error('후원 내역 조회에 실패했습니다.');
