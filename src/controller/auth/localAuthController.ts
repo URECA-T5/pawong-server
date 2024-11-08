@@ -48,6 +48,7 @@ export const localLogin = async (
       user: {
         nickName: user.nickName,
         profileImage: user.profileImage,
+        isAdmin: user.isAdmin,
       },
     });
   } catch (error) {
