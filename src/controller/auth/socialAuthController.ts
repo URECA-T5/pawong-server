@@ -25,6 +25,6 @@ export const googleCallback = (req: Request, res: Response): void => {
   const profileImage = encodeURIComponent(user.profileImage!);
 
   res.redirect(
-    `http://localhost:3000/socialLogin?accessToken=${accessToken}&refreshToken=${refreshToken}&nickName=${nickName}&profileImage=${profileImage}`,
+    `http://pawong.store/socialLogin?accessToken=${accessToken}&refreshToken=${refreshToken}&nickName=${nickName}&profileImage=${profileImage}`,
   );
 };
